@@ -1,0 +1,39 @@
+Task M02. Code test framework function.
+Precondition: Imagine you are writing tool or test framework function which is needed to test REST API. Please use Java.
+ 
+To do: Write a command line program which takes 1 mandatory parameter - folder with test cases (1 file == 1 test case).
+Implement the following algorithm:
+
+1.	Program recursively reads all the files with ‘*.json’ extension from provided folder.
+It’s expected that all the files are valid JSON files with text/plain MIME-type and have UTF-8 encoding.
+Each file is a single test case data.
+
+2.	For every file the program should do the following:
+a.	update JSON: set value 40ke08ujmlb8lf for key “server_key”;
+b.	send updated JSON as a body of POST request to SUT (URL: http://localhost:8787/test);
+c.	retrieve the HTTP status code;
+d.	retrieve the value of “status” key from the answer.
+
+3.	Output all the filenames with corresponding HTTP-status and test case status from server into single result.txt file.
+Each line is in the format:
+filename::HTTP-code::status
+
+Expected result: zip/tar archive with source files and instruction how to compile and run.
+It should be runnable from IDE or command line.
+
+How the task will be checked: Your program will be run against the set of prepared test cases (JSON-files).
+Each test case will be send by your program to special test server deployed on localhost:8787/test.
+And server will send response back.
+After it’s done the result file result.txt will be compared with the golden result.
+
+Example of the JSON-request file:
+{“server_key”: “REPLACE-ME”,
+“test_data”: “Some arbitrary string - not important in bounds of the task”}
+
+Example of the JSON-response file:
+{“status”: “PASSED”}
+Possible values are: PASSED, FAILED, ERROR, UNKNOWN (default)
+
+Example of the result.txt file:
+full-path/test_case1.json::200::PASSED
+full-path/test_case2.json::200::FAILED
